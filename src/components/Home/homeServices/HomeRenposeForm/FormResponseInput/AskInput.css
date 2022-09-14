@@ -1,0 +1,47 @@
+.ContainerAskInputs5s{
+    gap: 2% !important;
+    margin: 1.5% 2.5% 0 2.5%;
+    padding: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+}
+
+.ContainerAskInputsTitle5s{
+    background-color: #00004f6b;
+}
+
+.titleAsk5s{
+    -webkit-text-stroke-width: thin;
+    color: #00004F;
+}
+
+.naoconformidade5s{
+    color: rgb(221, 14, 14)
+}
+
+.PanelAskInputs5s{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.imageWidth5s{
+    width: 85%;
+}
+
+.iconImagewidth5s{
+    max-width: 8%;
+}
+
+.cursor_pointer{
+    cursor: pointer;
+    color: #00004F;
+}
+
+.cursor_pointer:hover{
+    cursor: pointer;
+    color: red;
+}

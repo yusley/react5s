@@ -1,0 +1,51 @@
+.profileUser5s{
+    background-color: #00004fa4;
+    padding: 0 0 0 1%;
+    display: flex;
+    height: 100px;
+    margin-bottom: 100px;
+    color:white;
+    
+}
+
+.ContainerTableProfile5s{
+    gap: 2% !important;
+    max-width: 95%;
+    margin: 1.5% 2.5% 0 2.5%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+}
+
+.btnPencilDropdown5s{
+    transition: transform .2s;
+}
+
+.btnPencilDropdown5s:hover{
+    color: #56568a;
+    transform: scale(1.5);
+}
+
+.imageDiv{
+    width: 120px;
+    height: 120px;
+    margin-top: 30px;
+}
+
+.image5S{
+ 
+  width: 100%;
+  height: 100%;
+}
+
+.sectorTitle{
+    padding: 0 1%;
+    flex: 1;
+    align-self: flex-end;
+}
+
+.sectorInfos{
+    display: flex;
+    
+}

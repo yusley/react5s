@@ -1,0 +1,85 @@
+.imgdiv{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2% 0px;
+    max-width: 500px;
+}
+
+#icon{
+    cursor: pointer;
+    color: #0d6efd;
+    margin: 5%;
+    animation-name: icons;
+    animation-duration: 600ms;
+    animation-delay: 500ms;
+    background-color: rgba(240, 248, 255, 0);
+    box-shadow: #085edf 0px 10px 10px 4px;
+    padding: 2%;
+}
+
+#icon:hover{
+    color: #085edf;
+    animation-name: icons;
+    transition: all 100ms;
+    animation-name: icons;
+    animation-duration: 1ms;
+}
+
+@keyframes icons{
+    0% {color: #0d6efd; width: 100px; transform: rotate(1deg);margin-left: 20px;}
+    /* 10% {color: #0d6efd; width: 91px; transform: rotate(-1deg)}
+    
+    30% {color: #0d6efd; width: 93px;  transform: rotate(-2deg)}
+    40% {color: #0d6efd; width: 94px; transform: rotate(3deg)} */
+    25% {color: #0d6efd; width: 92px; transform: rotate(3deg);margin-left: 60px}
+    50% {color: #0d6efd; width: 95px;transform: rotate(0deg);margin-left: -60px}
+    /* 60% {color: #0d6efd; width: 96px; transform: rotate(4deg)}
+    70% {color: #0d6efd; width: 97px; transform: rotate(-4deg)}
+    80% {color: #0d6efd; width: 98px; transform: rotate(5deg)}
+    90% {color: #0d6efd; width: 99px;transform: rotate(-5deg)} */
+    75% {color: #0d6efd; width: 97px; transform: rotate(-3deg)}
+    100% {color: #0d6efd; width:100px;}
+   
+}
+
+#imagem{
+    max-width: 100%;
+    max-height: 200px;
+   
+}
+
+
+
+.btn5S{
+    background-color: #0d6efd;
+    width: 100%;
+    margin: 10% 0 0 0;
+    border: none;
+    
+}
+
+
+
+.card5Supload{
+    background-color:#f0f2f5;
+    display: flex;
+    border:none ;
+    border-radius: 10px;
+    width: 250px;
+    
+}
+
+.container5Supload{
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    padding: 0;
+    
+}
+

@@ -1,0 +1,103 @@
+.container5S{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2% !important;
+    max-width: 95%;
+    margin: 0 2.5%
+}
+
+.containerFiltyer5s{
+    max-width: 96%;
+    margin: 0 1.5%
+}
+
+.Numberbranch5s{
+    position: absolute;
+    top:0;
+    right: 1%;
+}
+.cardHeader5S{
+    padding: 0;
+    background-color: #0d6efd;
+    height: 4rem
+}
+
+.card-img-5S {
+    background-repeat:no-repeat;
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
+    background-position:center;
+    border-top-left-radius: 9px;
+    border-bottom-left-radius: 9px;
+}
+.cardHome5S{
+   
+    width: 400px;
+    height: 150px;
+    margin: 4% 0;
+    
+    color: #232529;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+}
+
+
+.cardBodyHome5S::-webkit-scrollbar {
+    width: 0px;
+}
+
+.titleHome5S{
+    color: #212529;
+    font-size: clamp(1em, 1em + 1vw, 1.30em) !important;
+    text-decoration: none;
+}
+
+.LinkCard5s{
+    text-decoration: none;
+    color: none;
+}
+
+.btn_home_createform5s{
+    border-radius: 0px !important;
+}
+
+.iconAddSector{
+    cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+    .cardHome5S{
+   
+        width: 250px;
+        height: 150px;
+        margin: 4% 0;
+        
+        color: #232529;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        
+    }
+  } 
+
+  .paginator-end-page5s{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+  }

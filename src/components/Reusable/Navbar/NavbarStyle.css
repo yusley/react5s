@@ -1,0 +1,15 @@
+.navmargin5s{
+    width: 95%;
+}
+
+.NavColor5S{
+    background-color: #00004F;
+}
+
+.navbar-dark .navbar-nav .nav-link{
+    color: white;
+}
+
+.navbar-dark .navbar-brand{
+    color: white;
+}

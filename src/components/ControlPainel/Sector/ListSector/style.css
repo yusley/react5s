@@ -1,0 +1,57 @@
+.ContainerTableSector5s{
+    gap: 2% !important;
+    max-width: 95%;
+    margin: 1.5% 2.5% 0 2.5%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+}
+
+.overflow-td-table-5s{
+    overflow-wrap: anywhere;
+}
+
+.link5S:hover {
+    color: #1e1e8a;
+}
+
+.inputTable5S{
+    border-radius: 15px;
+}
+
+.link5S{
+    color: #00004F;
+    text-decoration: none;
+}
+
+.ButtonOrdering5S{
+    background: #f0f2f5;
+    border: none;
+    color:#212529;
+    font-weight: bold;
+    font-variant: normal;
+    padding: 0;
+}
+
+.ButtonOrdering5S:hover{
+    border: none !important;
+    background: #f0f2f5 !important;
+    border: none;
+    color:#212529;
+}
+
+.ButtonOrdering5S:focus{
+    border: none !important;
+    background: #f0f2f5 !important;
+    box-shadow: none;
+    color:#212529;
+}
+
+.show>.btn-primary.dropdown-toggle.ButtonOrdering5S{
+    border: none;
+    background: #f0f2f5;
+    border: none;
+    color:#212529;
+}
+

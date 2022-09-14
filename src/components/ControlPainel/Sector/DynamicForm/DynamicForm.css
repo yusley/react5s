@@ -1,0 +1,186 @@
+.forms{
+    padding: 2%;
+  
+}
+
+.removeButtonRow{
+    display: flex;
+    flex-direction:row-reverse;
+}
+
+.buttonRemoveQuest{
+    
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+   
+    
+}
+
+.buttonSugest{
+    
+    width: 100px;
+    height: 40px;
+    margin: 0 10px;
+    margin: 2%;
+    
+}
+
+.button5S{
+    
+    width: 50px;
+    padding: 2%;
+    height: 50px;
+    margin: 0 10px;
+    
+}
+
+.buttonAddNewForm{
+    
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 2% 0;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.questionCard{
+    margin-bottom: 2%;
+    max-width: 600px;
+    padding: 5%;
+    display: flex;
+    box-shadow: 0px 5px 5px rgb(104, 104, 104);
+}
+
+.inputs{
+    margin-bottom: 10%;
+    border: solid 1px #3636c091;
+}
+
+.inputs:hover{
+    box-shadow: none;
+}
+
+.inputs:focus{
+    outline:0;
+    
+    box-shadow: none;
+}
+
+.toimages{
+    display: flex;
+    
+
+}
+
+.question{
+    height: 100px;
+    padding: 2%;
+
+}
+
+
+.check{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.profileSectorDynamic{
+    background-color: #00004f6b;
+    justify-content: center;
+    align-items: center;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px black;
+    margin-bottom: 5%;
+   
+
+}
+
+.profileDynamic{
+    justify-content: center;
+    padding: 5%;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.selectSenso{
+    max-width: 200px;
+    background-color: #00004f6e;
+    color: white;
+    border: none;
+    margin-bottom: 5%;
+}
+
+.selectSenso option{
+    padding: 5%;
+    color: white
+}
+
+.imageDynamic{
+    max-width: 200px;
+    height: 170px;
+
+}
+
+.dynamicTitle{
+    margin: 5% 0;
+    color:white;
+    
+}
+
+.containerModal{
+
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 1000vh;
+    left: auto;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.555);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: azure;
+    padding-top: 10%;
+}
+
+.modalForm{
+    margin: 50px 0;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+}
+
+.modalLoad{
+    text-align: center;
+}
+
+.columDate{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2%;
+    color: white;
+}
+
+.dateInput{
+    width: 200px;
+    color: white;
+    background-color: #00004f6b;
+    border: none;
+   
+}
+
+.dateInput:focus{
+    background-color: #00004f6b;
+    color: white;
+}
+
+.clickOnOption{
+    background-color: #00004f6b;
+}

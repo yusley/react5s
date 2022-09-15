@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { useContext } from "react";
 import AuthContext from "./AuthService/AuthContext";
 
-const baseURL = "http://django-env.eba-wwpsqqmz.sa-east-1.elasticbeanstalk.com/";
+const baseURL = "http://django-env.eba-wwpsqqmz.sa-east-1.elasticbeanstalk.com";
 
 const useAxios = () => {
   const { authTokens, user, setUser, setAuthTokens, logoutUser } = useContext(AuthContext);

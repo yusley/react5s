@@ -168,7 +168,7 @@ function Register(){
                       disabled ={(load)?true:false}
                       >                      
                       <option value="" disabled>Selecione um cargo</option>
-                      {office.map((office) => <option key={office.id} value={office.id}>{office.name}</option>)}
+                      {office && office.map((office) => <option key={office.id} value={office.id}>{office.name}</option>)}
                     </Form.Select>
                   </InputGroup>
                   {formik.errors.office ? <Form.Text id="officeerror" className="text-danger">{formik.errors.office}</Form.Text> : null}

@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   const loginUser = async (email, password) => {
 
-    const response = await fetch("/auth/login/", {
+    const response = await fetch(`${domain}/auth/login/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

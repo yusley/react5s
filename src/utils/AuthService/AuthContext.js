@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
-const domain = "http://django-env.eba-wwpsqqmz.sa-east-1.elasticbeanstalk.com"
+const domain = "http://127.0.0.1:8000"
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   const loginUser = async (email, password) => {
 
-    const response = await fetch(`${domain}/auth/login/`, {
+    const response = await fetch("/auth/login/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

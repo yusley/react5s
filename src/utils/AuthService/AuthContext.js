@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
-const domain = "https://webmercale.mercale.net/"
+const domain = "https://webmercale.mercale.net"
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {

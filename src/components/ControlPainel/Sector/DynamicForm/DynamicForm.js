@@ -104,6 +104,7 @@ function DynamicForm() {
           quest : '',
           weigth : 1,
           is_image : false
+          
         }
       ]
     ))
@@ -118,7 +119,8 @@ function DynamicForm() {
 
     if(questions[index].id){
       if(property == 'quest'){
-        updatequestions[index].ask = value
+        updatequestions[index].quest = value
+        
       }else if(property == 'weigth'){
         updatequestions[index].askweight = value
       }else{
@@ -130,6 +132,7 @@ function DynamicForm() {
     }
 
     if(property == 'quest') {
+      updatequestions[index].ask = value
       updatequestions[index].quest = value
       validateQuestion(value,index)
     }else if(property == 'weigth'){
@@ -253,7 +256,7 @@ function DynamicForm() {
     }
 
 
-
+    console.log(questions)
 
 
     
@@ -269,31 +272,58 @@ function DynamicForm() {
     api.post('/formr/', dataForm, {
       "Content-Type": "application/json"
     })
-    .then((element) => {
-      let formId = element.data.id
+    .then((element) => element)
+    .then((data) => {
+
       questions.map((ele) => {
+
+        setTimeout(console.log('mais um'),2000)
 
         if(ele.ask){
           var askData = new Object()
         
           askData.ask = ele.ask
           askData.askweight = ele.weigth
-          askData.formId = formId
+          askData.formId = data.data.id
           askData.is_image = ele.is_image
+
+          
 
           api.post('/formrask/', askData, {
             "Content-Type":"application/json"
           })
-          .then((ele) => {console.log(ele)})
+          .then((ele) => console.log(ele))
           .catch((err) => console.log(err))
+
+        
           handleShow()
           const initialLoad = setTimeout(initLoad,5000)
-          navigate(`/perfilsetor/${sectorInformations.sectorId}/`)
+          //navigate(`/perfilsetor/${sectorInformations.sectorId}/`)
+        }
+        else{
+          var askData = new Object()
+        
+          askData.ask = ele.quest
+          askData.askweight = ele.weigth
+          askData.formId = data.data.id
+          askData.is_image = ele.is_image
+
+          
+
+          api.post('/formrask/', askData, {
+            "Content-Type":"application/json"
+          })
+          .then((ele) => console.log(ele))
+          .catch((err) => console.log(err))
+          const initialLoad = setTimeout(initLoad,5000)
+          //navigate(`/perfilsetor/${sectorInformations.sectorId}/`)
         }
       })
-     
 
-      })
+      navigate(`/perfilsetor/${sectorInformations.sectorId}/`)
+    })
+
+
     .catch((err) => {
       console.log(err)
       const initialLoad = setTimeout(initLoad,3000)
@@ -589,7 +619,7 @@ function DynamicForm() {
             {
               map(questions, (element, index)=>(
             
-              <Row key={element.id} className="justify-content-md-center">
+              <Row key={element.id && element.id} className="justify-content-md-center">
               
               <Card className="questionCard">
 

@@ -344,7 +344,7 @@ function DynamicFormEdit() {
           objectPutQuest.askweight = value.askweight
           objectPutQuest.formId = value.formId
           objectPutQuest.is_image = value.is_image
-          api.put(`http://localhost:8000/formrask/${value.id}/`, objectPutQuest)
+          api.put(`https:/webmercale.mercale.net/formrask/${value.id}/`, objectPutQuest)
           .then((element) => (element))
           .catch((err) => (err))
         }else{

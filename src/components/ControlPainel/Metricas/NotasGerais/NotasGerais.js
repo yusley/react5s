@@ -3,9 +3,8 @@ import {Button, Col, Container, Form, Table} from 'react-bootstrap'
 import useAxios from '../../../../utils/useAxios'
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import GetOffice from '../../../Accounts/Register/OfficeServices/Offices';
+import './metrics.css'
 import NoData from '../../../Reusable/Messages/MessageTable';
-import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 
 function NotasGerais (){
     
@@ -53,15 +52,16 @@ function NotasGerais (){
             //setLoad(true)
             // pesquisa os formulários
             api.get(`/metrics/form/?end_at__lte=${values.endDate}&start_at__gte=${values.startDate}&title=${values.form}`)
+            .then(setNotes([]), setSectorGroups([]))
             .then( forms => {
                 SetDataForm(forms.data.results)
-                //setNotes([])
                 //pesquisa as perguntas
                 forms.data.results.map((element, index) => {
 
                     api.get(`/metrics/relatory/?formId=${element.id}`)
+                    .then()
                     .then( relatory => {
-                       
+                       console.log(relatory.data.results)
                         if (relatory.data.results.length == 0) {
                             setNotes(notes => [...notes, {note: 0, 
                                 sector: element.sector,
@@ -80,10 +80,9 @@ function NotasGerais (){
                             relatory.data.results.map((element, index) => {
                                 
                                 contNote += element.responseweight
-                                
                                 if (relatory.data.results.length == index + 1){
-                                    contNote = contNote / relatory.data.results.length
-                                    setNotes(notes => [...notes, {note: contNote, 
+                                    let noteFinish = contNote / relatory.data.results.length
+                                    setNotes(notes => [...notes, {note: noteFinish, 
                                                                 sectorGroup: relatory.data.results[0].sectorGroup,
                                                                 sectorGroupId: relatory.data.results[0].sectorGroupId,
                                                                 sector: relatory.data.results[0].sector,
@@ -107,7 +106,18 @@ function NotasGerais (){
     
     }});
  
-   useEffect(() => {
+    useEffect(() => {
+        var NewArray = notes.filter((value, index, self) =>
+        index === self.findIndex((t) => (
+            t === value
+        ))
+        )
+        
+        const valuesArray = NewArray.sort((a, b) => a.sector.toLowerCase() > b.sector.toLowerCase() ? 1 : -1)
+        setNotesOrdenate(valuesArray)
+    }, [notes]); 
+
+    useEffect(() => {
         var NewArray = sectorGroups.filter((value, index, self) =>
         index === self.findIndex((t) => (
             t?.sectorGroupId === value?.sectorGroupId
@@ -126,20 +136,7 @@ function NotasGerais (){
 
         const valuesArray = NewArray.sort((a, b) => a?.sectorGroupId > b?.sectorGroupId ? 1:-1)
         setSectorGroupsOrdenate(valuesArray)
-        //console.log(valuesArray)
-    }, [sectorGroups]); 
-    
-
-    useEffect(() => {
-        var NewArray = notes.filter((value, index, self) =>
-        index === self.findIndex((t) => (
-            t.sectorId === value.sectorId
-        ))
-        )
-        const valuesArray = NewArray.sort((a, b) => a.sector.toLowerCase() > b.sector.toLowerCase() ? 1 : -1)
-        setNotesOrdenate(valuesArray)
-        //console.log(valuesArray)
-    }, [notes]); 
+    }, [notesOrdenate]); 
     
     return(
         <Container fluid className="ContainerTableProfile5s p-3">
@@ -213,35 +210,44 @@ function NotasGerais (){
                 </Col>
             </Form>
 
-            <Table striped hover responsive>
+            <Table hover responsive>
                 <thead>
                     <tr>
-                        <th>Setor</th>
+                        <th>SubSetor</th>
                         <th>Pontuação</th>
                         <th>Média do setor</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {Children.toArray(sectorGroupsOrdenate.map((sectorGroupElement, index) => {
-                        
+                    {Children.toArray(sectorGroupsOrdenate.map((sectorGroupElement, inde) => {
+                        let first = true
                         return notesOrdenate.map((element, index) => {   
 
-                            if (element.sectorGroupId == sectorGroupElement.sectorGroupId && element.is_response){
-                                
+                            if (element.sectorGroupId == sectorGroupElement.sectorGroupId && element.is_response && first){
+                                first = false
                                 return(
                                     <tr>
                                         <td>{element.sector}</td>
                                         <td>{element.note.toFixed(2)}</td>
-                                        <td>
+                                        <td rowspan={sectorGroupElement.cont}>
                                             {(((sectorGroupElement.note / sectorGroupElement.cont) * 100) / 3).toFixed(2)}%
                                         </td>
                                     </tr>
                                 )
-                            }else if(element.sectorGroupId == sectorGroupElement.sectorGroupId && !element.is_response){
+                            }
+                            else if(element.sectorGroupId == sectorGroupElement.sectorGroupId && element.is_response){
                                 return(
                                     <tr>
                                         <td>{element.sector}</td>
-                                        <td>O formulário desse setor não foi respondido</td>
+                                        <td>{element.note.toFixed(2)}</td>
+                                    </tr>
+                                )
+                            }
+                            else if(element.sectorGroupId == sectorGroupElement.sectorGroupId && !element.is_response){
+                                return(
+                                    <tr>
+                                        <td>{element.sector}</td>
+                                        <td>O formulário desse SubSetor não foi respondido</td>
                                         <td></td>
                                     </tr>
                                 )
@@ -250,7 +256,9 @@ function NotasGerais (){
                             if (notesOrdenate.length == index + 1){
                                 return(
                                     <tr>
-                                        <td></td>
+                                        <td class="topB"></td>
+                                        <td class="topB"></td>
+                                        <td class="topB"></td>
                                     </tr>
                                 )
                             }

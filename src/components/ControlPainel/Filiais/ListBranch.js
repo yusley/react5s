@@ -27,7 +27,6 @@ function ListBranch(){
             .then( element => {
                 setData(element.data.results)
                 setPaginateObject(element.data)
-                console.log(element.data)
             })
             .catch(err => console.log(err))
             }
@@ -80,7 +79,6 @@ function ListBranch(){
             <Table striped hover responsive>
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th >Ativo?</th>
                             <th ><HandleOrdering columName = "Número" 
                                                 reloadTableActive = {reloadTable} 
@@ -102,11 +100,10 @@ function ListBranch(){
                     <tbody>
                         {Children.toArray(data.map((element, index) =>
                         <tr>
-                            <td className="col-1">{((paginateObject.actual_pages - 1) * 2) + index + 1}</td>
                             <td  className="col-1 ">{element.is_active ? <FontAwesomeIcon color="green" icon={faCircleCheck}></FontAwesomeIcon> : <FontAwesomeIcon color="red" icon={faBan}></FontAwesomeIcon>}</td>
                             <td className="col-1">{element.number}</td>
                             
-                            <td  className="col-8">{element.address}</td>
+                            <td  className="col-9">{element.address}</td>
 
                             <td className="col-1">
                                 <Dropdown className="ms-1">

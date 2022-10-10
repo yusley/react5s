@@ -1,6 +1,35 @@
 
 .topB{
-    border-top: 2px solid #221f1f!important;
+    border-top: 2px solid #221f1f !important;
     box-shadow: none !important;
     padding: 0 !important;
+}
+
+.leftborder{
+    border-left: 2px solid #221f1f !important;
+}
+
+.center-rowspan{
+    vertical-align : middle;
+    text-align:center;
+}
+
+.aprovedClass{
+    background-color: #63fc63 !important;
+}
+
+.semiaprovedClass{
+    background-color: #f78a8a !important;
+}
+
+.reprovedClass{
+    background-color: #ff0000 !important;
+}
+
+.text-color-white{
+    color: white
+}
+
+.table-remove-border{
+    border-bottom-width: none !important;
 }

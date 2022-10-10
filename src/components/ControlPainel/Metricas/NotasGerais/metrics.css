@@ -1,6 +1,6 @@
 
 .topB{
-    border-top: 2px solid #221f1f !important;
+    border-top: 1.2px solid #221f1f !important;
     box-shadow: none !important;
     padding: 0 !important;
 }
@@ -30,6 +30,6 @@
     color: white
 }
 
-.table-remove-border{
-    border-bottom-width: none !important;
+.table-remove-border>:not(caption)>*>*{
+    border-bottom-width: inherit !important;
 }

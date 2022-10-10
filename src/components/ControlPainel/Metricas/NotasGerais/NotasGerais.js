@@ -254,10 +254,12 @@ function NotasGerais (){
             {validateAfterSubmit ?
             <>
                 <h2 className='text-center'> Média de notas por setor</h2>
-                <p className='text-center'> {titleValues[0].form} Loja {titleValues[0].branch}:  
-                                            {moment(titleValues[0].startDate).format(" DD/MM/YYYY")} -
-                                            {moment(titleValues[0].endDate).format(" DD/MM/YYYY")}
-                </p>
+                {titleValues ?
+                    <p className='text-center'> {titleValues[0].form} Loja {titleValues[0].branch}:  
+                                                {moment(titleValues[0].startDate).format(" DD/MM/YYYY")} -
+                                                {moment(titleValues[0].endDate).format(" DD/MM/YYYY")}
+                    </p>
+                : null }
                 <Table hover responsive className="NotesResult table-remove-border">
                     <thead>
                         <tr>
@@ -340,7 +342,7 @@ function NotasGerais (){
                 :
                 <>
                     <h2 className='text-center mt-5'> Lista de não conformidades</h2>
-                    <Table hover responsive className="table-remove-border">
+                    <Table hover striped responsive className="table-remove-border">
                         <thead>
                             <tr>
                                 <th>Setor</th>

@@ -3,18 +3,20 @@ import {Button, Col, Container, Form, Table} from 'react-bootstrap'
 import useAxios from '../../../../utils/useAxios'
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import GetOffice from '../../../Accounts/Register/OfficeServices/Offices';
+import './metrics.css'
 import NoData from '../../../Reusable/Messages/MessageTable';
-import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
+import Load from '../../../Reusable/Load/Load';
+import moment from 'moment';
 
 function NotasGerais (){
     
     const api = useAxios()
     const [dataForm, SetDataForm] = useState([])
-    const [dataAsks, SetDataAsks] = useState([])
-    const [dataResponses, SetDataResponses] = useState([])
+    const [dataZero, SetDataZero] = useState([])
+    const [dataZeroOrdenate, SetDataZeroOrdenate] = useState([])
     const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
     const [load, setLoad] = useState(false)
+    const [titleValues, setTitleValues] = useState(false)
     const [branchs, setBranchs] = useState([])
     const [notes, setNotes] = useState([])
     const [notesOrdenate, setNotesOrdenate] = useState([])
@@ -50,18 +52,30 @@ function NotasGerais (){
         validateOnChange : validateAfterSubmit,
         validateOnBlur : validateAfterSubmit,
         onSubmit: values => {
-            //setLoad(true)
+            setLoad(true)
+            setTitleValues([{
+                form: formik.values.form,
+                branch: formik.values.branch,
+                startDate: formik.values.startDate,
+                endDate: formik.values.endDate,
+            }])
+
             // pesquisa os formulários
             api.get(`/metrics/form/?end_at__lte=${values.endDate}&start_at__gte=${values.startDate}&title=${values.form}`)
+            .then(setNotes([]), setSectorGroups([]), SetDataZero([]))
             .then( forms => {
                 SetDataForm(forms.data.results)
-                //setNotes([])
+
+                if (forms.data.results.length === 0){
+                    setTimeout(function(){  setLoad(false)} , 500);
+                }
+                
                 //pesquisa as perguntas
                 forms.data.results.map((element, index) => {
 
                     api.get(`/metrics/relatory/?formId=${element.id}`)
+                    .then()
                     .then( relatory => {
-                       
                         if (relatory.data.results.length == 0) {
                             setNotes(notes => [...notes, {note: 0, 
                                 sector: element.sector,
@@ -80,10 +94,17 @@ function NotasGerais (){
                             relatory.data.results.map((element, index) => {
                                 
                                 contNote += element.responseweight
-                                
+
+                                if (element.responseweight === 0){
+                                    SetDataZero(dataZero => [...dataZero, {
+                                        response: element.response, 
+                                        sector: element.sector,
+                                        sectorGroup: element.sectorGroup,}])
+                                }
+
                                 if (relatory.data.results.length == index + 1){
-                                    contNote = contNote / relatory.data.results.length
-                                    setNotes(notes => [...notes, {note: contNote, 
+                                    let noteFinish = contNote / relatory.data.results.length
+                                    setNotes(notes => [...notes, {note: noteFinish, 
                                                                 sectorGroup: relatory.data.results[0].sectorGroup,
                                                                 sectorGroupId: relatory.data.results[0].sectorGroupId,
                                                                 sector: relatory.data.results[0].sector,
@@ -101,13 +122,43 @@ function NotasGerais (){
                     })
                     .catch(err => console.log(err))
 
+                if (forms.data.results.length == index + 1){
+                    setTimeout(function(){  setLoad(false)} , 1000);
+                }
                 })
             })
             .catch(err => console.log(err))
     
     }});
  
-   useEffect(() => {
+    //ordena e filtra o array de notas
+    useEffect(() => {
+        var NewArray = notes.filter((value, index, self) =>
+        index === self.findIndex((t) => (
+            t === value
+        ))
+        )
+        
+        const valuesArray = NewArray.sort((a, b) => a.sector.toLowerCase() > b.sector.toLowerCase() ? 1 : -1)
+        setNotesOrdenate(valuesArray)
+    }, [notes]);
+
+    //ordena e filtra o array de não conformidades
+    useEffect(() => {
+        var NewArray = dataZero.filter((value, index, self) =>
+        index === self.findIndex((t) => (
+            t === value
+        ))
+        )
+        
+        const valuesArray = NewArray.sort((a, b) => a.sector.toLowerCase() > b.sector.toLowerCase() ? 1 : -1)
+        SetDataZeroOrdenate(valuesArray)
+    }, [dataZero]); 
+
+    console.log(titleValues)
+
+    //ordena e filtra o array de setores
+    useEffect(() => {
         var NewArray = sectorGroups.filter((value, index, self) =>
         index === self.findIndex((t) => (
             t?.sectorGroupId === value?.sectorGroupId
@@ -126,20 +177,7 @@ function NotasGerais (){
 
         const valuesArray = NewArray.sort((a, b) => a?.sectorGroupId > b?.sectorGroupId ? 1:-1)
         setSectorGroupsOrdenate(valuesArray)
-        //console.log(valuesArray)
-    }, [sectorGroups]); 
-    
-
-    useEffect(() => {
-        var NewArray = notes.filter((value, index, self) =>
-        index === self.findIndex((t) => (
-            t.sectorId === value.sectorId
-        ))
-        )
-        const valuesArray = NewArray.sort((a, b) => a.sector.toLowerCase() > b.sector.toLowerCase() ? 1 : -1)
-        setNotesOrdenate(valuesArray)
-        //console.log(valuesArray)
-    }, [notes]); 
+    }, [notesOrdenate]); 
     
     return(
         <Container fluid className="ContainerTableProfile5s p-3">
@@ -209,57 +247,124 @@ function NotasGerais (){
                 {formik.errors.endDate ? <Form.Text id="endDateerror" className="text-danger">{formik.errors.endDate}</Form.Text> : null}
 
                 <Col className='mt-3' >
-                    <Button type='submit' onClick={setValidateAfterSubmit}>Teste</Button>
+                    <Button type='submit' disabled ={(load)?true:false} onClick={setValidateAfterSubmit}>Gerar relatório</Button>
                 </Col>
             </Form>
+            
+            {validateAfterSubmit ?
+            <>
+                <h2 className='text-center'> Média de notas por setor</h2>
+                {titleValues ?
+                    <p className='text-center'> {titleValues[0].form} Loja {titleValues[0].branch}:  
+                                                {moment(titleValues[0].startDate).format(" DD/MM/YYYY")} -
+                                                {moment(titleValues[0].endDate).format(" DD/MM/YYYY")}
+                    </p>
+                : null }
+                <Table hover responsive className="NotesResult table-remove-border">
+                    <thead>
+                        <tr>
+                            <th>SubSetor</th>
+                            <th className='text-end'>Pontuação</th>
+                            <th className='text-center'>%</th>
+                        </tr>
+                    </thead>
+                    {load ?
+                    <tbody> 
+                        <tr>
+                            <td colSpan={3} className='text-center'>
+                                <div className="d-flex flex-column align-items-center">
+                                    <Load height='' width = '5%'/> 
+                                    Só um momento, estamos gerando seu relatório :)
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    :
+                    <tbody>
+                        {Children.toArray(sectorGroupsOrdenate.map((sectorGroupElement, inde) => {
+                            let first = true
+                            return notesOrdenate.map((element, index) => {   
 
-            <Table striped hover responsive>
-                <thead>
-                    <tr>
-                        <th>Setor</th>
-                        <th>Pontuação</th>
-                        <th>Média do setor</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Children.toArray(sectorGroupsOrdenate.map((sectorGroupElement, index) => {
+                                if (element.sectorGroupId == sectorGroupElement.sectorGroupId && element.is_response && first){
+                                    first = false
+                                    return(
+                                        <tr>
+                                            <td className='col-6'>{element.sector}</td>
+                                            <td className='text-end col-4'>{element.note.toFixed(2)}</td>
+                                            <td className={"center-rowspan col-2 leftborder " + ((((sectorGroupElement.note / sectorGroupElement.cont) * 100) / 3) >= 70 ? 
+                                            "aprovedClass" : (((sectorGroupElement.note / sectorGroupElement.cont) * 100) / 3) < 70 && 
+                                            (((sectorGroupElement.note / sectorGroupElement.cont) * 100) / 3) >= 50 ? "semiaprovedClass" : "text-color-white reprovedClass")} rowspan={sectorGroupElement.cont}>
+                                                
+                                                {element.sectorGroup} {(((sectorGroupElement.note / sectorGroupElement.cont) * 100) / 3).toFixed(2)}%
+                                            
+                                            </td>
+                                        </tr>
+                                    )
+                                }
+                                else if(element.sectorGroupId == sectorGroupElement.sectorGroupId && element.is_response){
+                                    return(
+                                        <tr>
+                                            <td className='col-6'>{element.sector}</td>
+                                            <td className='text-end col-4'>{element.note.toFixed(2)}</td>
+                                        </tr>
+                                    )
+                                }
+                                else if(element.sectorGroupId == sectorGroupElement.sectorGroupId && !element.is_response){
+                                    return(
+                                        <tr>
+                                            <td className='col-6'>{element.sector}</td>
+                                            <td className='text-start col-4'>O formulário desse SubSetor não foi respondido</td>
+                                            <td className='col-2 leftborder'></td>
+                                        </tr>
+                                    )
+                                }
+
+                                if (notesOrdenate.length == index + 1){
+                                    return(
+                                        <tr>
+                                            <td class="topB"></td>
+                                            <td class="topB"></td>
+                                            <td class="topB"></td>
+                                        </tr>
+                                    )
+                                }
                         
-                        return notesOrdenate.map((element, index) => {   
+                        })
+                        }))}
+                        <NoData table={notesOrdenate} messageSearch="Nenhum senso encontrado nesssa data" messageNoData="Nenhum senso encontrado" colspan='3'/>
+                    </tbody>
+                    }
+                </Table>
 
-                            if (element.sectorGroupId == sectorGroupElement.sectorGroupId && element.is_response){
-                                
-                                return(
-                                    <tr>
-                                        <td>{element.sector}</td>
-                                        <td>{element.note.toFixed(2)}</td>
-                                        <td>
-                                            {(((sectorGroupElement.note / sectorGroupElement.cont) * 100) / 3).toFixed(2)}%
-                                        </td>
-                                    </tr>
-                                )
-                            }else if(element.sectorGroupId == sectorGroupElement.sectorGroupId && !element.is_response){
-                                return(
-                                    <tr>
-                                        <td>{element.sector}</td>
-                                        <td>O formulário desse setor não foi respondido</td>
-                                        <td></td>
-                                    </tr>
-                                )
-                            }
 
-                            if (notesOrdenate.length == index + 1){
-                                return(
-                                    <tr>
-                                        <td></td>
-                                    </tr>
-                                )
-                            }
-                    
-                    })
-                    }))}
-                    <NoData table={dataForm} colspan='7' messageNoData="Nenhum senso encontrado"/>
-                </tbody>
-            </Table>
+                {load ?
+                    null
+                :
+                <>
+                    <h2 className='text-center mt-5'> Lista de não conformidades</h2>
+                    <Table hover striped responsive className="table-remove-border">
+                        <thead>
+                            <tr>
+                                <th>Setor</th>
+                                <th>SubSetor</th>
+                                <th>Motivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Children.toArray(dataZeroOrdenate.map((dataZeroElement, index) =>  
+                            <tr>
+                                <td className="col-2"> {dataZeroElement.sectorGroup} </td>
+                                <td className="col-2"> {dataZeroElement.sector} </td>
+                                <td className="col-8"> {dataZeroElement.response}</td>
+                            </tr>
+                            ))}
+                            <NoData table={dataZeroOrdenate} messageSearch="Nenhuma Não conformidade encontrada"  messageNoData="Nenhuma Não conformidade encontrada" colspan='3'/>
+                        </tbody>
+                    </Table>
+                </>
+                }
+            </>
+            : null}
         </Container>
     )
 }

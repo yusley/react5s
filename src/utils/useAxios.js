@@ -5,6 +5,7 @@ import { useContext } from "react";
 import AuthContext from "./AuthService/AuthContext";
 
 const baseURL = "https://webmercale.mercale.net";
+//const baseURL = "http://localhost:3000";
 
 const useAxios = () => {
   const { authTokens, user, setUser, setAuthTokens, logoutUser } = useContext(AuthContext);

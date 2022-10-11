@@ -42,7 +42,8 @@ function PasswordReset(){
             values.email = ''
         })
         .catch((err) => {
-            if (err.response.data.email[0]){
+            if (err.response.data.email){
+              console.log(err)
               setError('Não existe nenhuma conta com esse email no sistema'); 
             }
             else{

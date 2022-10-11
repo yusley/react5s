@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 const domain = "https://webmercale.mercale.net"
+//const domain = "http://localhost:3000"
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {

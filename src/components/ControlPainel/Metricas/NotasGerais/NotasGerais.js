@@ -65,7 +65,6 @@ function NotasGerais (){
             .then(setNotes([]), setSectorGroups([]), SetDataZero([]))
             .then( forms => {
                 SetDataForm(forms.data.results)
-                console.log(forms.data.results)
 
                 if (forms.data.results.length === 0){
                     setTimeout(function(){  setLoad(false)} , 500);
@@ -97,10 +96,12 @@ function NotasGerais (){
                                 contNote += element.responseweight
 
                                 if (element.responseweight === 0){
+                                    console.log(element)
                                     SetDataZero(dataZero => [...dataZero, {
                                         response: element.response, 
                                         sector: element.sector,
-                                        sectorGroup: element.sectorGroup,}])
+                                        sectorGroup: element.sectorGroup,
+                                        image: element.image,}])
                                 }
 
                                 if (relatory.data.results.length == index + 1){
@@ -154,6 +155,7 @@ function NotasGerais (){
         
         const valuesArray = NewArray.sort((a, b) => a.sector.toLowerCase() > b.sector.toLowerCase() ? 1 : -1)
         SetDataZeroOrdenate(valuesArray)
+        console.log(valuesArray)
     }, [dataZero]); 
 
     //ordena e filtra o array de setores
@@ -284,7 +286,7 @@ function NotasGerais (){
                             let first = true
                             return notesOrdenate.map((element, index) => {   
 
-                                if (element.sectorGroupId == sectorGroupElement.sectorGroupId && element.is_response && first){
+                                if (element.sectorGroupId == sectorGroupElement.sectorGroupId && first){
                                     first = false
                                     return(
                                         <tr>
@@ -346,6 +348,7 @@ function NotasGerais (){
                                 <th>Setor</th>
                                 <th>SubSetor</th>
                                 <th>Motivo</th>
+                                <th>Imagem</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -353,7 +356,8 @@ function NotasGerais (){
                             <tr>
                                 <td className="col-2"> {dataZeroElement.sectorGroup} </td>
                                 <td className="col-2"> {dataZeroElement.sector} </td>
-                                <td className="col-8"> {dataZeroElement.response}</td>
+                                <td className="col-6"> {dataZeroElement.response}</td>
+                                <td className="col-1"> <a href={dataZeroElement.image} target="_blank" rel="noopener noreferrer">Anexo</a></td>
                             </tr>
                             ))}
                             <NoData table={dataZeroOrdenate} messageSearch="Nenhuma Não conformidade encontrada"  messageNoData="Nenhuma Não conformidade encontrada" colspan='3'/>

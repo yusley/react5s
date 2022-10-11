@@ -61,10 +61,11 @@ function NotasGerais (){
             }])
 
             // pesquisa os formulários
-            api.get(`/metrics/form/?end_at__lte=${values.endDate}&start_at__gte=${values.startDate}&title=${values.form}`)
+            api.get(`/metrics/form/?end_at__lte=${values.endDate}&start_at__gte=${values.startDate}&title=${values.form}&sectorId__branchName__number=${values.branch}`)
             .then(setNotes([]), setSectorGroups([]), SetDataZero([]))
             .then( forms => {
                 SetDataForm(forms.data.results)
+                console.log(forms.data.results)
 
                 if (forms.data.results.length === 0){
                     setTimeout(function(){  setLoad(false)} , 500);
@@ -154,8 +155,6 @@ function NotasGerais (){
         const valuesArray = NewArray.sort((a, b) => a.sector.toLowerCase() > b.sector.toLowerCase() ? 1 : -1)
         SetDataZeroOrdenate(valuesArray)
     }, [dataZero]); 
-
-    console.log(titleValues)
 
     //ordena e filtra o array de setores
     useEffect(() => {
@@ -314,7 +313,6 @@ function NotasGerais (){
                                         <tr>
                                             <td className='col-6'>{element.sector}</td>
                                             <td className='text-start col-4'>O formulário desse SubSetor não foi respondido</td>
-                                            <td className='col-2 leftborder'></td>
                                         </tr>
                                     )
                                 }

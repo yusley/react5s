@@ -65,6 +65,7 @@ function HomeSectores(){
         setPaginateObject(data) 
     }
 
+    console.log(data)
     return(
         <>
         <Row className=" containerFiltyer5s d-flex justify-content-between p-1 mt-3">

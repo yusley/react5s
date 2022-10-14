@@ -8,6 +8,8 @@ import NoData from '../../../Reusable/Messages/MessageTable';
 import Load from '../../../Reusable/Load/Load';
 import moment from 'moment';
 import Modal from 'react-bootstrap/Modal';
+import React, { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
 function NotasGerais (){
     
@@ -25,6 +27,11 @@ function NotasGerais (){
     const [sectorGroupsOrdenate, setSectorGroupsOrdenate] = useState([])
     const handleClose = () => setLoad(false);
     const handleShow = () => setLoad(true);
+
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
 
     useEffect(() => {
 
@@ -250,7 +257,9 @@ function NotasGerais (){
                 {formik.errors.endDate ? <Form.Text id="endDateerror" className="text-danger">{formik.errors.endDate}</Form.Text> : null}
 
                 <Col className='mt-3' >
-                    <Button type='submit' disabled ={(load)?true:false} onClick={setValidateAfterSubmit}>Gerar relatório</Button>
+                    <Button  type='submit' disabled ={(load)?true:false} onClick={setValidateAfterSubmit}>Gerar relatório</Button>
+                    
+                    <Button className='ms-sm-3' onClick={handlePrint}>Gerar PDF</Button>
                 </Col>
             </Form>
              
@@ -262,9 +271,9 @@ function NotasGerais (){
                     </div>
                 </Modal.Body>
             </Modal>   
-                      
+        
             {validateAfterSubmit ?
-            <>
+            <Container fluid ref={componentRef} >
                 <h2 className='text-center'> Média de notas por setor</h2>
                 {titleValues ?
                     <p className='text-center'> {titleValues[0].form} Loja {titleValues[0].branch}:  
@@ -357,7 +366,7 @@ function NotasGerais (){
                         <NoData table={dataZeroOrdenate} messageSearch="Nenhuma Não conformidade encontrada"  messageNoData="Nenhuma Não conformidade encontrada" colspan='3'/>
                     </tbody>
                 </Table> 
-            </>
+            </Container>
             : null}
         </Container>
     )

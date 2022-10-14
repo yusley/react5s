@@ -7,6 +7,7 @@ import './metrics.css'
 import NoData from '../../../Reusable/Messages/MessageTable';
 import Load from '../../../Reusable/Load/Load';
 import moment from 'moment';
+import Modal from 'react-bootstrap/Modal';
 
 function NotasGerais (){
     
@@ -22,6 +23,8 @@ function NotasGerais (){
     const [notesOrdenate, setNotesOrdenate] = useState([])
     const [sectorGroups, setSectorGroups] = useState([])
     const [sectorGroupsOrdenate, setSectorGroupsOrdenate] = useState([])
+    const handleClose = () => setLoad(false);
+    const handleShow = () => setLoad(true);
 
     useEffect(() => {
 
@@ -67,7 +70,7 @@ function NotasGerais (){
                 SetDataForm(forms.data.results)
 
                 if (forms.data.results.length === 0){
-                    setTimeout(function(){  setLoad(false)} , 500);
+                    setTimeout(function(){  handleClose()} , 500);
                 }
                 
                 //pesquisa as perguntas
@@ -125,7 +128,7 @@ function NotasGerais (){
                     .catch(err => console.log(err))
 
                 if (forms.data.results.length == index + 1){
-                    setTimeout(function(){  setLoad(false)} , 1000);
+                    setTimeout(function(){  handleClose()} , 1000);
                 }
                 })
             })
@@ -155,7 +158,6 @@ function NotasGerais (){
         
         const valuesArray = NewArray.sort((a, b) => a.sector.toLowerCase() > b.sector.toLowerCase() ? 1 : -1)
         SetDataZeroOrdenate(valuesArray)
-        console.log(valuesArray)
     }, [dataZero]); 
 
     //ordena e filtra o array de setores
@@ -251,7 +253,16 @@ function NotasGerais (){
                     <Button type='submit' disabled ={(load)?true:false} onClick={setValidateAfterSubmit}>Gerar relatório</Button>
                 </Col>
             </Form>
-            
+             
+            <Modal style={{ background: '#00004F' }} show={load} backdrop="static" keyboard={false} centered onHide={handleClose}>
+                <Modal.Body>
+                    <div className="d-flex flex-column align-items-center">
+                        <Load height='' width = '30%'/> 
+                        Só um momento, estamos gerando seu relatório :)
+                    </div>
+                </Modal.Body>
+            </Modal>   
+                      
             {validateAfterSubmit ?
             <>
                 <h2 className='text-center'> Média de notas por setor</h2>
@@ -269,18 +280,7 @@ function NotasGerais (){
                             <th className='text-center'>%</th>
                         </tr>
                     </thead>
-                    {load ?
-                    <tbody> 
-                        <tr>
-                            <td colSpan={3} className='text-center'>
-                                <div className="d-flex flex-column align-items-center">
-                                    <Load height='' width = '5%'/> 
-                                    Só um momento, estamos gerando seu relatório :)
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    :
+                    
                     <tbody>
                         {Children.toArray(sectorGroupsOrdenate.map((sectorGroupElement, inde) => {
                             let first = true
@@ -328,43 +328,35 @@ function NotasGerais (){
                                         </tr>
                                     )
                                 }
-                        
+
                         })
                         }))}
                         <NoData table={notesOrdenate} messageSearch="Nenhum senso encontrado nesssa data" messageNoData="Nenhum senso encontrado" colspan='3'/>
                     </tbody>
-                    }
                 </Table>
 
-
-                {load ?
-                    null
-                :
-                <>
-                    <h2 className='text-center mt-5'> Lista de não conformidades</h2>
-                    <Table hover striped responsive className="table-remove-border">
-                        <thead>
-                            <tr>
-                                <th>Setor</th>
-                                <th>SubSetor</th>
-                                <th>Motivo</th>
-                                <th>Imagem</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Children.toArray(dataZeroOrdenate.map((dataZeroElement, index) =>  
-                            <tr>
-                                <td className="col-2"> {dataZeroElement.sectorGroup} </td>
-                                <td className="col-2"> {dataZeroElement.sector} </td>
-                                <td className="col-6"> {dataZeroElement.response}</td>
-                                <td className="col-1"> <a href={dataZeroElement.image} target="_blank" rel="noopener noreferrer">Anexo</a></td>
-                            </tr>
-                            ))}
-                            <NoData table={dataZeroOrdenate} messageSearch="Nenhuma Não conformidade encontrada"  messageNoData="Nenhuma Não conformidade encontrada" colspan='3'/>
-                        </tbody>
-                    </Table>
-                </>
-                }
+                <h2 className='text-center mt-5'> Lista de não conformidades</h2>
+                <Table hover striped responsive className="table-remove-border">
+                    <thead>
+                        <tr>
+                            <th>Setor</th>
+                            <th>SubSetor</th>
+                            <th>Motivo</th>
+                            <th>Imagem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Children.toArray(dataZeroOrdenate.map((dataZeroElement, index) =>  
+                        <tr>
+                            <td className="col-2"> {dataZeroElement.sectorGroup} </td>
+                            <td className="col-2"> {dataZeroElement.sector} </td>
+                            <td className="col-6"> {dataZeroElement.response}</td>
+                            <td className="col-1"> <a href={dataZeroElement.image} target="_blank" rel="noopener noreferrer">Anexo</a></td>
+                        </tr>
+                        ))}
+                        <NoData table={dataZeroOrdenate} messageSearch="Nenhuma Não conformidade encontrada"  messageNoData="Nenhuma Não conformidade encontrada" colspan='3'/>
+                    </tbody>
+                </Table> 
             </>
             : null}
         </Container>

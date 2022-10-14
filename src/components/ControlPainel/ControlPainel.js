@@ -161,7 +161,7 @@ function ControlPainel() {
                     <Collapse in={openMetrics} className="collapse5S">
                         <ListGroup id="cardSectors" variant="flush" className="w-100">
                             <ListGroup.Item><Link to="/notasgerais" className="linkControlPanel5S"> Notas Gerais </Link></ListGroup.Item>
-                            <ListGroup.Item><Link to="/sectores" className="linkControlPanel5S"> Opção 2 </Link></ListGroup.Item>
+                            <ListGroup.Item><Link to="/respostas" className="linkControlPanel5S"> Lista de respostas </Link></ListGroup.Item>
                             <ListGroup.Item><Link to="/sectores" className="linkControlPanel5S"> Opção 3 </Link></ListGroup.Item>
                         </ListGroup >
                     </Collapse>

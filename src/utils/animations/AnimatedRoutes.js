@@ -29,6 +29,7 @@ import SectorGroupProfile from "../../components/ControlPainel/Sector/SectorGrou
 import HomeRenposeForm from "../../components/Home/homeServices/HomeRenposeForm/HomeRenposeForm";
 import FormResponseInput from "../../components/Home/homeServices/HomeRenposeForm/FormResponseInput/FormResponseInput";
 import NotasGerais from "../../components/ControlPainel/Metricas/NotasGerais/NotasGerais";
+import Responses from "../../components/ControlPainel/Metricas/NotasGerais/Responses";
 
 function AnimatedRoutes(){
 
@@ -88,6 +89,7 @@ function AnimatedRoutes(){
                     {/* Métricas */}
 
                     <Route exact path="/notasgerais" element={<NotasGerais/>} />
+                    <Route exact path="/respostas" element={<Responses/>} />
 
 
                 </Route>

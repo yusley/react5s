@@ -88,8 +88,9 @@ function Responses(){
             }])
 
             // pesquisa os formulários
-            api.get(`/metrics/form/?end_at__lte=${values.endDate}&start_at__gte=${values.startDate}&title=${values.form}&sectorId__branchName__number=${values.branch}`)
-            .then(setNotes([]), setSectorGroups([]), SetDataZero([]))
+            api.get(`/metrics/form/?end_at__lte=${values.endDate}&start_at__gte=${values.startDate}&title=${values.form}
+            &sectorId__branchName__number=${values.branch}&sectorId__sectorGroup=${values.sector}&sectorId=${values.subSector}`)
+            .then(SetDataZero([]))
             .then( forms => {
                 SetDataForm(forms.data.results)
 
@@ -103,25 +104,8 @@ function Responses(){
                     api.get(`/metrics/relatory/?formId=${element.id}`)
                     .then()
                     .then( relatory => {
-                        if (relatory.data.results.length == 0) {
-                            setNotes(notes => [...notes, {note: 0, 
-                                sector: element.sector,
-                                sectorGroup: element.sectorGroup,
-                                sectorId: element.sectorId,
-                                sectorGroupId: element.sectorGroupId,
-                                is_response: false}])
-                            
-                            setSectorGroups(sectorGroups => [...sectorGroups, 
-                                {sectorGroupId: element.sectorGroupId,
-                                cont : 0,
-                                note: 0}]) 
-                        }
-                        else{
-                            let contNote = 0
                             relatory.data.results.map((element, index) => {
                                 
-                                contNote += element.responseweight
-
                                 if (element.responseweight === 0){
                                     console.log(element)
                                     SetDataZero(dataZero => [...dataZero, {
@@ -131,24 +115,8 @@ function Responses(){
                                         image: element.image,}])
                                 }
 
-                                if (relatory.data.results.length == index + 1){
-                                    let noteFinish = contNote / relatory.data.results.length
-                                    setNotes(notes => [...notes, {note: noteFinish, 
-                                                                sectorGroup: relatory.data.results[0].sectorGroup,
-                                                                sectorGroupId: relatory.data.results[0].sectorGroupId,
-                                                                sector: relatory.data.results[0].sector,
-                                                                sectorId: relatory.data.results[0].sectorId,
-                                                                is_response: true}])
-                                    
-                                    setSectorGroups(sectorGroups => [...sectorGroups, 
-                                        {sectorGroupId: relatory.data.results[0].sectorGroupId,
-                                        cont : 0,
-                                        note: 0}]) 
-                                }
                             })
-                        }
-                        
-                    })
+                        })
                     .catch(err => console.log(err))
 
                 if (forms.data.results.length == index + 1){

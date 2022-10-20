@@ -42,7 +42,8 @@ function NavBar(props){
                                         <NavDropdown.Item as={Link} to="/cargos">Gerenciar cargos</NavDropdown.Item>
                                     </NavDropdown>
                                     <NavDropdown title={`Métricas`} id="collasible-nav-dropdown" className='text-light'>
-                                        <NavDropdown.Item as={Link} to="/admin">Opção 1</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/notasgerais">Notas gerais</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/respostas">Lista de respostas</NavDropdown.Item>
                                     </NavDropdown>
                                     <Nav.Link as={Link} to="/admin">Painel administrativo</Nav.Link>
                                 </>

@@ -60,10 +60,6 @@ function Responses(){
             .required('Você precisa selecionar um senso'),
         branch: Yup.string()
             .required('Você precisa selecionar uma filial'),
-        sector: Yup.string()
-            .required('Você precisa selecionar um setor'),
-        subSector: Yup.string()
-            .required('Você precisa selecionar um sub setor'),
         startDate: Yup.date()
             .required('Escolha uma data inicial'),
         endDate: Yup.date()
@@ -93,7 +89,6 @@ function Responses(){
             .then(SetDataZero([]))
             .then( forms => {
                 SetDataForm(forms.data.results)
-
                 if (forms.data.results.length === 0){
                     setTimeout(function(){  handleClose()} , 500);
                 }
@@ -104,16 +99,16 @@ function Responses(){
                     api.get(`/metrics/relatory/?formId=${element.id}`)
                     .then()
                     .then( relatory => {
+                        console.log(relatory.data.results)
                             relatory.data.results.map((element, index) => {
                                 
-                                if (element.responseweight === 0){
-                                    console.log(element)
-                                    SetDataZero(dataZero => [...dataZero, {
-                                        response: element.response, 
-                                        sector: element.sector,
-                                        sectorGroup: element.sectorGroup,
-                                        image: element.image,}])
-                                }
+                                SetDataZero(dataZero => [...dataZero, {
+                                    response: element.response, 
+                                    ask: element.Ask,
+                                    note: element.responseweight, 
+                                    sector: element.sector,
+                                    sectorGroup: element.sectorGroup,
+                                    image: element.image,}])
 
                             })
                         })
@@ -138,6 +133,8 @@ function Responses(){
         
         const valuesArray = NewArray.sort((a, b) => a.sector.toLowerCase() > b.sector.toLowerCase() ? 1 : -1)
         SetDataZeroOrdenate(valuesArray)
+        //console.log(dataZero)
+        //console.log(valuesArray)
     }, [dataZero]); 
     
     return(
@@ -196,7 +193,7 @@ function Responses(){
                         value={formik.values.sector}
                         disabled ={(load) || sectorsDate.length == 0 ? true:false}>
 
-                        <option key='defaultts' default value="" disabled>Escolha um Setor</option>
+                        <option key='defaultts' default value="">Todos os setores</option>
                         {sectorsDate ? sectorsDate.map((sectorsDate) =>
                             <option key={sectorsDate.id} value={sectorsDate.id}>{sectorsDate.name}</option>
                         ) : null}
@@ -215,7 +212,7 @@ function Responses(){
                         value={formik.values.subSector}
                         disabled ={(load) || subSectorsDate.length == 0 ?true:false}>
 
-                        <option default value="" disabled>Escolha um sub setor</option>
+                        <option default value="">Todos os subSetores</option>
                         {subSectorsDate ? subSectorsDate.map((subSectorsDate) =>
                             <option key={subSectorsDate.id} value={subSectorsDate.id}>{subSectorsDate.name}</option>
                         ) : null}
@@ -280,6 +277,7 @@ function Responses(){
                             <th>SubSetor</th>
                             <th>Pergunta</th>
                             <th>Resposta</th>
+                            <th>Nota</th>
                             <th>Imagem</th>
                         </tr>
                     </thead>
@@ -289,7 +287,8 @@ function Responses(){
                             <td className="col-1"> {dataZeroElement.sectorGroup} </td>
                             <td className="col-1"> {dataZeroElement.sector} </td>
                             <td className="col-4"> {dataZeroElement.ask}</td>
-                            <td className="col-5"> {dataZeroElement.response}</td>
+                            <td className="col-4"> {dataZeroElement.response}</td>
+                            <td className="col-1"> {dataZeroElement.note}</td>
                             <td className="col-1"> <a href={dataZeroElement.image} target="_blank" rel="noopener noreferrer">Anexo</a></td>
                         </tr>
                         ))}

@@ -30,6 +30,7 @@ import HomeRenposeForm from "../../components/Home/homeServices/HomeRenposeForm/
 import FormResponseInput from "../../components/Home/homeServices/HomeRenposeForm/FormResponseInput/FormResponseInput";
 import NotasGerais from "../../components/ControlPainel/Metricas/NotasGerais/NotasGerais";
 import Responses from "../../components/ControlPainel/Metricas/NotasGerais/Responses";
+import BarCode from "../../components/Reusable/BarCode";
 
 function AnimatedRoutes(){
 
@@ -79,7 +80,7 @@ function AnimatedRoutes(){
                     <Route exact path='/filiais' element={<ListBranch/>}/>
 
                     {/*Sectores*/}
-
+                    <Route exact path="/cadastros" element={<BarCode/>} />
                     <Route exact path='/setores/senso/:sectorId/editar/:id' element={<DynamicFormEdit/>} />
                     <Route exact path='/setores/' element={<SectorGroup/>}/>
                     <Route exact path='/setores/adicionarsetor' element={<PostSectorGroup/>} />
